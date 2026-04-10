@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: appointment-service
+spec:
+  selector:
+    app: appointment-service
+  ports:
+    - port: 50051
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appointment-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appointment-service
+  template:
+    metadata:
+      labels:
+        app: appointment-service
+    spec:
+      containers:
+      - name: appointment-service
+        image: microservices-health-care-appointment-service:latest
+        imagePullPolicy: Never
+        command: ["sh", "-c"]
+        args: ["npm run start:dev"]
+        env:
+        - name: DATABASE_URL
+          value: "postgres://postgres:postgres@postgres:5432/postgres"

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: doctor-code-patch
+data:
+  getDoctor.js: |
+    // Patch DevOps V4 : Retour d'une fonction pure (pas d'objet)
+    export default function getDoctorFactory(dependencies) {
+      // On retourne DIRECTEMENT la fonction pour que gRPC puisse faire son .bind()
+      return async function execute(call, callback) {
+        
+        // Simulation de charge CPU pour nos futurs tests
+        let charge = 0;
+        for(let i=0; i < 50000; i++) { charge += i; }
+        
+        const response = { 
+          id: "999", 
+          payload: "Docteur trouvé ! Hack DevOps V4 validé avec succès !" 
+        };
+        
+        // Sécurité : Supporte les Promises OU les Callbacks gRPC natifs
+        if (typeof callback === 'function') {
+          callback(null, response);
+        }
+        return response;
+      };
+    }

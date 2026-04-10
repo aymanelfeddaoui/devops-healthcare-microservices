@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-gateway-config
+data:
+  nginx.conf: |
+    events { 
+        worker_connections 1024; 
+    }
+    http {
+        server {
+            listen 3000 http2; # OBLIGATOIRE : gRPC a besoin de HTTP/2
+
+            # Routage gRPC direct vers le Doctor Service
+            location / {
+                grpc_pass grpc://doctor-service:50051;
+            }
+        }
+    }

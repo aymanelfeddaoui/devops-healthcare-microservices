@@ -8,7 +8,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "migrate": ". ./config/development.env; node_modules/.bin/sequelize db:migrate",
-    "start:dev": ". ./config/development.env; nodemon --watch . --exec \"node --inspect=0.0.0.0:9239 index.js\"",
+    "start:dev": "nodemon --watch . --exec \"node --inspect=0.0.0.0:9239 index.js\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.js\" --fix"
   },
   "dependencies": {

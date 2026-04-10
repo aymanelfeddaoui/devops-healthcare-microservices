@@ -1,6 +1,7 @@
 import core from './core/index.js'
 import config from '../config/index.js'
 import modules from './modules/index.js'
+import 'dotenv/config'
 
 const { logger, grpcServerFactory, postgresDatabase } = modules
 

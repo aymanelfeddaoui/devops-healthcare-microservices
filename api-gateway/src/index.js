@@ -5,6 +5,7 @@ import routesFactory from './modules/http/routes/index.js'
 import controllersFactory from './modules/http/controllers/index.js'
 import middlewaresFactory from './modules/http/middlewares/index.js'
 import servicesFactory from './services/index.js'
+import 'dotenv/config'; 
 
 const { logger, httpLogger, loadService } = modules
 

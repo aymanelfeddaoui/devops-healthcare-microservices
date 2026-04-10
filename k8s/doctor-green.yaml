@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doctor-service-green-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: doctor-service-green
+  template:
+    metadata:
+      labels:
+        app: doctor-service-green
+    spec:
+      containers:
+      - name: doctor-service
+        image: microservices-health-care-doctor-service:latest
+        imagePullPolicy: Never
+        command: ["sh", "-c"]
+        args: ["node index.js"]
+        ports:
+        - containerPort: 50051
+        # --- Le contrat de ressources pour l'HPA ---
+        resources:
+          requests:
+            cpu: "100m"      # Ce que le pod consomme au repos/usage normal
+            memory: "100Mi"
+          limits:
+            cpu: "500m"      # La limite stricte à ne jamais dépasser
+            memory: "256Mi"
+        envFrom:
+        - configMapRef:
+            name: doctor-env-config
+        # --- L'injection chirurgicale de notre code ---
+        volumeMounts:
+        - name: code-patch
+          mountPath: /code/src/core/use-cases/getDoctor.js
+          subPath: getDoctor.js
+      volumes:
+      - name: code-patch
+        configMap:
+          name: doctor-code-patch

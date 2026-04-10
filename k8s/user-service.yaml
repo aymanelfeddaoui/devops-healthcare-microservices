@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  selector:
+    app: user-service
+  ports:
+    - port: 50051 # Port standard gRPC interne
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: user-service
+        image: microservices-health-care-user-service:latest   
+        imagePullPolicy: Never # TRÈS IMPORTANT EN LOCAL !
+        command: ["sh", "-c"]
+        args: ["npm run start:dev"]
+        env:
+        - name: DATABASE_URL
+          value: "postgres://postgres:postgres@postgres:5432/postgres"
