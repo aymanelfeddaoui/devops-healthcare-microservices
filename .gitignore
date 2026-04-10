@@ -34,3 +34,16 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Dépendances Node.js
+node_modules/
+
+# Fichiers temporaires LaTeX (Garde uniquement ton code source .tex et le .pdf final)
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.lof
