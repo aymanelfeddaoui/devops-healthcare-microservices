@@ -6,8 +6,8 @@ client.load(['.'], 'doctor.proto');
 
 export const options = {
   stages: [
-    { duration: '30s', target: 100 },
-    { duration: '2m', target: 100 },
+    { duration: '30s', target: 1000 },
+    { duration: '2m', target: 1000 },
     { duration: '20s', target: 0 },
   ],
 };
